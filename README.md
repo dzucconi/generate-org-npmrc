@@ -1,6 +1,6 @@
 # generate-org-npmrc
 
-![npm](https://img.shields.io/npm/v/generate-org-npmrc) ![NPM](https://img.shields.io/npm/l/generate-org-npmrc)
+[![npm](https://img.shields.io/npm/v/generate-org-npmrc)](https://www.npmjs.com/package/generate-org-npmrc) ![NPM](https://img.shields.io/npm/l/generate-org-npmrc)
 
 Authenticates with Artifactory and generates an .npmrc.
 
