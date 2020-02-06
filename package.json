@@ -1,6 +1,6 @@
 {
   "name": "generate-org-npmrc",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Generates .npmrc file",
   "main": "index.js",
   "license": "MIT",
