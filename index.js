@@ -5,8 +5,10 @@ const open = require("open");
 const axios = require("axios");
 const { prompt } = require("enquirer");
 
+const [_node, _file, ORG_NAME] = process.argv;
+
 const CONFIG = {
-  organization: null,
+  organization: ORG_NAME,
   baseURL: null,
   apiKey: null
 };
@@ -36,14 +38,17 @@ ${auth.trim()}
 };
 
 (async () => {
-  const { organization } = await prompt({
-    type: "input",
-    name: "organization",
-    message: "What's your organization name?"
-  });
+  if (!CONFIG.organization) {
+    const { organization } = await prompt({
+      type: "input",
+      name: "organization",
+      message: "What's your organization name?"
+    });
 
-  CONFIG.organization = organization;
-  CONFIG.baseURL = `https://${organization}.jfrog.io/${organization}`;
+    CONFIG.organization = organization;
+  }
+
+  CONFIG.baseURL = `https://${CONFIG.organization}.jfrog.io/${CONFIG.organization}`;
 
   const { hasApiKey } = await prompt([
     {
