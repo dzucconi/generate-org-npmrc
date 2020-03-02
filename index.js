@@ -5,12 +5,12 @@ const open = require("open");
 const axios = require("axios");
 const { prompt } = require("enquirer");
 
-const [_node, _file, ORG_NAME] = process.argv;
+const [_node, _file, ORG_NAME, API_KEY] = process.argv;
 
 const CONFIG = {
   organization: ORG_NAME,
   baseURL: null,
-  apiKey: null
+  apiKey: API_KEY
 };
 
 const findApiKey = () => {
@@ -50,25 +50,27 @@ ${auth.trim()}
 
   CONFIG.baseURL = `https://${CONFIG.organization}.jfrog.io/${CONFIG.organization}`;
 
-  const { hasApiKey } = await prompt([
-    {
-      type: "confirm",
-      name: "hasApiKey",
-      message: "Do you have an API Key?"
-    }
-  ]);
+  if (!CONFIG.apiKey) {
+    const { hasApiKey } = await prompt([
+      {
+        type: "confirm",
+        name: "hasApiKey",
+        message: "Do you have an API Key?"
+      }
+    ]);
 
-  if (!hasApiKey) findApiKey();
+    if (!hasApiKey) findApiKey();
 
-  const { apiKey } = await prompt([
-    {
-      type: "input",
-      name: "apiKey",
-      message: "Please enter your API Key"
-    }
-  ]);
+    const { apiKey } = await prompt([
+      {
+        type: "input",
+        name: "apiKey",
+        message: "Please enter your API Key"
+      }
+    ]);
 
-  CONFIG.apiKey = apiKey;
+    CONFIG.apiKey = apiKey;
+  }
 
   console.log("Writing .npmrc");
   const npmrc = await generateNpmrc();
