@@ -19,7 +19,7 @@ const findApiKey = () => {
     return;
   }
 
-  open(`${CONFIG.baseURL}/webapp/app.html#/profile`);
+  open(CONFIG.baseURL);
 };
 
 const generateNpmrc = async () => {
@@ -29,10 +29,10 @@ const generateNpmrc = async () => {
   });
 
   const { data: auth } = await client.get(
-    `${CONFIG.baseURL}/api/npm/npm/auth/${CONFIG.organization}`
+    `${CONFIG.baseURL}/${CONFIG.organization}/api/npm/npm/auth/${CONFIG.organization}`
   );
 
-  return `registry=${CONFIG.baseURL}/api/npm/npm/
+  return `registry=${CONFIG.baseURL}/${CONFIG.organization}/api/npm/npm/
 ${auth.trim()}
 `;
 };
@@ -48,7 +48,7 @@ ${auth.trim()}
     CONFIG.organization = organization;
   }
 
-  CONFIG.baseURL = `https://${CONFIG.organization}.jfrog.io/${CONFIG.organization}`;
+  CONFIG.baseURL = `https://${CONFIG.organization}.jfrog.io`;
 
   if (!CONFIG.apiKey) {
     const { hasApiKey } = await prompt([
